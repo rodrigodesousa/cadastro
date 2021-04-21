@@ -24,7 +24,7 @@ public class Pessoa implements Serializable {
 	private Integer id;
 	
 	@NotEmpty(message="O nome deve ser preenchido")
-	@Length(min=1, max=60, message="O tamanho deve ser entre 5 e 60 caracteres")
+	@Length(min=1, max=60, message="O tamanho deve ter entre 1 e 60 caracteres")
 	private String nome;
 	
 	@JsonFormat(pattern="dd/mm/yyyy")
