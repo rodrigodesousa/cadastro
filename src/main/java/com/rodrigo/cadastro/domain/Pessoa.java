@@ -18,7 +18,7 @@ public class Pessoa implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Range(min=1, max=1)
+	@Range(min=1, max=9999999)
 	private Integer id;
 	private String nome;
 	
