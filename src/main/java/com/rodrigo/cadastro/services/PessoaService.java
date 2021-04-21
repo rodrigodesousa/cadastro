@@ -3,10 +3,12 @@ package com.rodrigo.cadastro.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.rodrigo.cadastro.domain.Pessoa;
 import com.rodrigo.cadastro.repositories.PessoaRepository;
+import com.rodrigo.cadastro.services.exceptions.DataIntegrityException;
 import com.rodrigo.cadastro.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -22,7 +24,12 @@ public class PessoaService {
 	}
 	public Pessoa insert(Pessoa obj) {
 		obj.setId(null);
-		return repo.save(obj);
+		try {
+			return repo.save(obj);	
+		}
+		catch (DataIntegrityViolationException e) {
+				throw new DataIntegrityException("Não é possivel inserir novos registros! Limite de registros alcançado.");
+		}
 	}
 	public Pessoa update(Pessoa obj) {
 		find(obj.getId());
