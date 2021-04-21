@@ -7,7 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -20,10 +22,15 @@ public class Pessoa implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Range(min=1, max=9999999)
 	private Integer id;
+	
+	@NotEmpty(message="O nome deve ser preenchido")
+	@Length(min=1, max=60, message="O tamanho deve ser entre 5 e 60 caracteres")
 	private String nome;
 	
 	@JsonFormat(pattern="dd/mm/yyyy")
 	private Date nascimento;
+	
+	@NotEmpty(message="O cpf deve ser preenchido")
 	private String cpf;
 	
 	public Pessoa() {
