@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.rodrigo.cadastro.domain.Pessoa;
 import com.rodrigo.cadastro.repositories.PessoaRepository;
+import com.rodrigo.cadastro.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class PessoaService {
@@ -16,6 +17,11 @@ public class PessoaService {
 	
 	public Pessoa find(Integer id) {
 		Optional<Pessoa> obj = repo.findById(id);
-		return obj.orElse(null);
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id
+				+ ", Tipo: " + Pessoa.class.getName()));
+	}
+	public Pessoa insert(Pessoa obj) {
+		obj.setId(null);
+		return repo.save(obj);
 	}
 }
